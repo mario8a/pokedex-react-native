@@ -3,10 +3,12 @@ import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'; //Sistema de validacion de formularios
 import { user, userDetails } from '../../utils/userDB';
+import useAuth from '../../hooks/useAuth';
 
 export default function LoginForm() {
 
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
   // validateOnChange hara que los errores se ejecuten cuando demos submit
   const formik = useFormik({
@@ -20,8 +22,7 @@ export default function LoginForm() {
       if (username !== user.username || password !== user.password) {
         setError('El usuario o la contraseña son incorrectos')
       } else {
-        console.log('Inicio de sesion correcto');
-        console.log(userDetails);
+        login(userDetails);
       }
     }
   })
